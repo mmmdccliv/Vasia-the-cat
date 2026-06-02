@@ -1,74 +1,64 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт моего кота</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="card">
-        <!-- Фотография кота -->
-        <img src="cat.jpg" alt="Фотография кота" class="cat-photo">
-        
-        <h1 class="cat-name">Вася</h1>
-        <p class="cat-bio">Основные сведения</p>
-
-        <!-- Сделанные прививки -->
-        <div class="section">
-            <h2>Сделанные прививки</h2>
-            <ul class="vaccines-list">
-                <li><span class="status-icon done">✓</span> Бешенство (Nobivac Rabies)</li>
-                <li><span class="status-icon done">✓</span> Комплексная (Nobivac Tricat Trio)</li>
-            </ul>
-        </div>
-
-        <!-- Календарь будущих прививок -->
-        <div class="section next-vaccines">
-            <h2>Календарь вакцинации</h2>
-            <div class="vaccine-schedule-item">
-                <div class="vaccine-info">
-                    <span class="status-icon future">⏳</span>
-                    <div>
-                        <strong>Повторная комплексная + Бешенство</strong>
-                        <!-- Укажите здесь дату следующей прививки в формате ГГГГ-ММ-ДД -->
-                        <p class="date-text">План: <span id="next-vaccine-date">2027-05-15</span></p>
-                    </div>
-                </div>
-                <div id="countdown-badge" class="badge">Расчет дней...</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Скрипт автоматического отсчета дней -->
-    <script>
-        function updateCountdown() {
-            const dateElement = document.getElementById('next-vaccine-date');
-            const badgeElement = document.getElementById('countdown-badge');
-            
-            const nextTargetDate = new Date(dateElement.innerText);
-            const currentDate = new Date();
-            
-            // Сброс часов для точности расчета дней
-            nextTargetDate.setHours(0,0,0,0);
-            currentDate.setHours(0,0,0,0);
-            
-            const timeDiff = nextTargetDate - currentDate;
-            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            
-            if (daysLeft > 0) {
-                badgeElement.innerText = `Осталось дней: ${daysLeft}`;
-                badgeElement.className = "badge badge-wait";
-            } else if (daysLeft === 0) {
-                badgeElement.innerText = "Нужно сделать сегодня!";
-                badgeElement.className = "badge badge-alert";
-            } else {
-                badgeElement.innerText = "Срок просрочен!";
-                badgeElement.className = "badge badge-alert";
-            }
-        }
-        updateCountdown();
-    </script>
-</body>
-</html>
+/* Стили для формы и новых списков */
+.processing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.processing-list li {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+.feedback-section {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+.textarea-input {
+    resize: vertical;
+    min-height: 80px;
+}
+.captcha-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.captcha-text {
+    font-size: 14px;
+    white-space: nowrap;
+}
+.captcha-input {
+    width: 80px;
+    margin-bottom: 0;
+}
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+.submit-btn:hover {
+    background-color: #45a049;
+}
+.form-status {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+.form-status.success { color: green; }
+.form-status.error { color: red; }
