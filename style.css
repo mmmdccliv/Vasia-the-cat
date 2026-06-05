@@ -1,80 +1,251 @@
-/* Новые стили для календаря и адаптивных блоков */
+/* Базовые настройки страницы */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Контейнер-карточка всей страницы */
+.card {
+    background: #ffffff;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+/* Фотография питомца */
+.cat-photo {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Текстовые данные кота */
+.cat-name {
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+}
+
+.cat-bio {
+    font-size: 0.95rem;
+    color: #48484a;
+    margin: 6px 0;
+}
+
+/* Секции */
 .section {
-    text-align: left;
-    border-top: 1px solid #eeeeee;
+    margin-top: 28px;
+    border-top: 1px solid #f2f2f7;
     padding-top: 16px;
-    margin-top: 16px;
 }
 
 .section h2 {
-    font-size: 18px;
-    color: #333333;
-    margin-bottom: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #1d1d1f;
 }
 
+/* Списки выполненных процедур */
+.vaccines-list, .processing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vaccines-list li, .processing-list li {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    padding: 8px 0;
+    color: #3a3a3c;
+}
+
+/* Иконки статуса */
+.status-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 0.85rem;
+}
+
+.status-icon.done {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.status-icon.future {
+    background-color: #f2f2f7;
+    font-size: 1rem;
+}
+
+/* Конструктор карточек календаря планов */
 .vaccine-schedule-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f8f9fa;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 8px;
+    background: #fbfbfd;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
 }
 
 .vaccine-info {
     display: flex;
     align-items: center;
-    font-size: 14px;
-    color: #444444;
 }
 
 .vaccine-info strong {
-    color: #333333;
+    font-size: 0.95rem;
     display: block;
-    font-size: 14px;
+    color: #1d1d1f;
 }
 
 .date-text {
-    font-size: 12px;
-    color: #777777;
-    margin-top: 2px;
+    font-size: 0.85rem;
+    color: #8e8e93;
+    margin: 2px 0 0 0;
 }
 
-.status-icon.done {
-    color: #2ecc71;
-    font-weight: bold;
-    margin-right: 8px;
-}
-
-.status-icon.future {
-    margin-right: 8px;
-    font-size: 16px;
-}
-
+/* Стили плашек (Badges) */
 .badge {
-    font-size: 11px;
-    font-weight: bold;
-    padding: 6px 10px;
-    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 10px;
     white-space: nowrap;
 }
 
+/* В ожидании (синий цвет) */
 .badge-wait {
     background-color: #e1f5fe;
     color: #0288d1;
 }
 
+/* Сегодня / Просрочено (красный приглушенный цвет) */
 .badge-alert {
     background-color: #ffebee;
     color: #c62828;
+    font-weight: 700;
 }
 
-.cat-photo {
-    width: 100%;          /* Растягивает фото на всю ширину родительского блока */
-    max-width: 100%;      /* Гарантирует, что фото не выйдет за пределы экрана */
-    height: auto;         /* Сохраняет оригинальные пропорции изображения [1] */
-    display: block;       /* Убирает лишние отступы снизу, характерные для инлайновых элементов */
-    object-fit: cover;    /* Аккуратно вписывает картинку без искажений, если задана фиксированная высота */
-    border-radius: 8px;   /* Опционально: скругление углов для красоты */
+/* Стили формы обратной связи */
+#feedbackForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-input {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 12px;
+    border: 1px solid #d1d1d6;
+    border-radius: 8px;
+    background-color: #fbfbfd;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #0071e3;
+    background-color: #ffffff;
+}
+
+.textarea-input {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Капча */
+.captcha-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f7;
+    padding: 10px 12px;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.captcha-text {
+    font-size: 0.9rem;
+    color: #48484a;
+    font-weight: 500;
+}
+
+.captcha-input {
+    width: 70px;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Кнопка отправки */
+.submit-btn {
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background-color: #0071e3;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0077ed;
+}
+
+/* Статус отправки формы */
+.form-status {
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.form-status.error {
+    color: #c62828;
+}
+
+.form-status.success {
+    color: #2e7d32;
+}
+
+/* Адаптивность под мобильные экраны */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .card {
+        padding: 16px;
+    }
+    .vaccine-schedule-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .badge {
+        align-self: flex-end;
+    }
 }
