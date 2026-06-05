@@ -14,23 +14,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <main class="card">
         <!-- Фотография кота с поддержкой адаптивности -->
-<img src="IMG_8002.jpeg" alt="Фотография кота Васи" class="cat-photo" width="400" height="600" loading="lazy">
+        <img src="IMG_8002.jpeg" alt="Фотография кота Васи" class="cat-photo" width="400" height="600" loading="lazy">
         
         <h1 class="cat-name">Вася</h1>
-        <p class="cat-bio">Дата рождения: 4 квартал 2022 года</p>
-        <p class="cat-bio">Ареал обитания: СНТ "Солнышко" и прилегающие территории</p>
-
+        <p class="cat-bio"><strong>Дата рождения:</strong> 4 квартал 2022 года</p>
+        <p class="cat-bio"><strong>Ареал обитания:</strong> СНТ "Солнышко" и прилегающие территории</p>
+        
         <!-- Сделанные прививки -->
         <section class="section">
             <h2>Сделанные прививки</h2>
             <ul class="vaccines-list">
-                <li><span class="status-icon done">✓</span> Бешенство (Рабифел) — <time datetime="2026-05-24" class="date-text">2026-05-24</time>
-                </li>
-                <li><span class="status-icon done">✓</span> Комплексная (Мультифел) — <time datetime="2026-05-24" class="date-text">2026-05-24</time>
-                </li>
+                <li><span class="status-icon done">✓</span> Бешенство (Рабифел) — <time datetime="2026-05-24" class="date-text">2026-05-24</time></li>
+                <li><span class="status-icon done">✓</span> Комплексная (Мультифел) — <time datetime="2026-05-24" class="date-text">2026-05-24</time></li>
             </ul>
         </section>
 
@@ -46,34 +43,34 @@
         </section>
 
         <!-- Календарь будущих прививок -->
-<section class="section next-vaccines">
-    <h2>Календарь вакцинации</h2>
-    <div class="vaccine-schedule-item">
-        <div class="vaccine-info">
-            <span class="status-icon future">⏳</span>
-            <div>
-                <strong>Повторная комплексная + Бешенство</strong>
-                <p class="date-text">План: <time class="next-vaccine-date" datetime="2027-05-24">2027-05-24</time></p>
+        <section class="section next-vaccines">
+            <h2>Календарь вакцинации</h2>
+            <div class="vaccine-schedule-item">
+                <div class="vaccine-info">
+                    <span class="status-icon future">⏳</span>
+                    <div>
+                        <strong>Повторная комплексная + Бешенство</strong>
+                        <p class="date-text">План: <time class="next-vaccine-date" datetime="2027-05-24">2027-05-24</time></p>
+                    </div>
+                </div>
+                <div class="badge countdown-badge">Расчет дней...</div>
             </div>
-        </div>
-        <div class="badge countdown-badge">Расчет дней...</div>
-    </div>
-</section>
+        </section>
 
-<!-- Календарь будущих обработок -->
-<section class="section next-treatments">
-    <h2>Календарь обработки</h2>
-    <div class="vaccine-schedule-item">
-        <div class="vaccine-info">
-            <span class="status-icon future">⏳</span>
-            <div>
-                <strong>Повторная обработка от блох и клещей</strong>
-                <p class="date-text">План: <time class="next-vaccine-date" datetime="2026-06-10">2026-06-10</time></p>
+        <!-- Календарь будущих обработок -->
+        <section class="section next-treatments">
+            <h2>Календарь обработки</h2>
+            <div class="vaccine-schedule-item">
+                <div class="vaccine-info">
+                    <span class="status-icon future">⏳</span>
+                    <div>
+                        <strong>Повторная обработка от блох и клещей</strong>
+                        <p class="date-text">План: <time class="next-vaccine-date" datetime="2026-06-10">2026-06-10</time></p>
+                    </div>
+                </div>
+                <div class="badge countdown-badge">Расчет дней...</div>
             </div>
-        </div>
-        <div class="badge countdown-badge">Расчет дней...</div>
-    </div>
-</section>
+        </section>
         
         <!-- Автономная форма обратной связи -->
         <section class="section feedback-section">
@@ -82,13 +79,13 @@
             <form id="feedbackForm">
                 <input type="text" id="userName" placeholder="Ваше имя" required class="form-input">
                 <textarea id="userMessage" placeholder="Ваше сообщение" required class="form-input textarea-input"></textarea>
-
+                
                 <!-- Блок капчи -->
                 <div class="captcha-wrapper">
                     <label for="captchaInput" id="captchaLabel" class="captcha-text">Загрузка капчи...</label>
                     <input type="number" id="captchaInput" required class="form-input captcha-input">
                 </div>
-
+                
                 <button type="submit" class="submit-btn">Отправить письмо</button>
                 <div id="formStatus" class="form-status"></div>
             </form>
@@ -97,83 +94,94 @@
 
     <!-- Логика сайта -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. Укажите вашу почту здесь
-            const MY_EMAIL = "mmmdccliv@gmail.com"; 
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. Почта куратора
+        const MY_EMAIL = "mmmdccliv@gmail.com"; 
+        
+        // 2. Универсальный расчет дней до событий с правильным склонением
+        function getDaysWord(days) {
+            const value = Math.abs(days);
+            if (value % 100 >= 11 && value % 100 <= 19) return "дней";
+            if (value % 10 === 1) return "день";
+            if (value % 10 >= 2 && value % 10 <= 4) return "дня";
+            return "дней";
+        }
 
-            // 2. Расчет дней до вакцинации
-            (function updateCountdown() {
-                const dateElement = document.getElementById('next-vaccine-date');
-                const badgeElement = document.getElementById('countdown-badge');
-                if (!dateElement || !badgeElement) return;
+        const currentDate = new Date();
+        currentDate.setHours(0,0,0,0);
+        
+        // Перебираем все элементы с датами планов
+        const dateElements = document.querySelectorAll('.next-vaccine-date');
+        
+        dateElements.forEach(dateElement => {
+            const nextTargetDate = new Date(dateElement.getAttribute('datetime') || dateElement.textContent.trim());
+            nextTargetDate.setHours(0,0,0,0);
+            
+            const timeDiff = nextTargetDate - currentDate;
+            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            // Находим плашку badge конкретно в этой карточке
+            const parentItem = dateElement.closest('.vaccine-schedule-item');
+            if (!parentItem) return;
+            const badgeElement = parentItem.querySelector('.countdown-badge');
+            if (!badgeElement) return;
 
-                const nextTargetDate = new Date(dateElement.textContent.trim());
-                const currentDate = new Date();
-                
-                nextTargetDate.setHours(0,0,0,0);
-                currentDate.setHours(0,0,0,0);
-                
-                const timeDiff = nextTargetDate - currentDate;
-                const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                
-                if (daysLeft > 0) {
-                    badgeElement.textContent = `Осталось дней: ${daysLeft}`;
-                    badgeElement.className = "badge badge-wait";
-                } else if (daysLeft === 0) {
-                    badgeElement.textContent = "Нужно сделать сегодня!";
-                    badgeElement.className = "badge badge-alert";
-                } else {
-                    badgeElement.textContent = "Срок просрочен!";
-                    badgeElement.className = "badge badge-alert";
-                }
-            })();
+            if (daysLeft > 0) {
+                badgeElement.textContent = `Осталось: ${daysLeft} ${getDaysWord(daysLeft)}`;
+                badgeElement.className = "badge badge-wait";
+            } else if (daysLeft === 0) {
+                badgeElement.textContent = "Сделать сегодня!";
+                badgeElement.className = "badge badge-alert";
+            } else {
+                badgeElement.textContent = "Просрочено!";
+                badgeElement.className = "badge badge-alert";
+            }
+        });
 
-            // 3. Инкапсулированная математическая капча
-            const captchaLogic = (function() {
-                const num1 = Math.floor(Math.random() * 8) + 2; 
-                const num2 = Math.floor(Math.random() * 8) + 2; 
-                const correctAnswer = num1 + num2;
+        // 3. Инкапсулированная математическая капча
+        const captchaLogic = (function() {
+            const num1 = Math.floor(Math.random() * 8) + 2; 
+            const num2 = Math.floor(Math.random() * 8) + 2; 
+            const correctAnswer = num1 + num2;
+            
+            const label = document.getElementById('captchaLabel');
+            if(label) label.textContent = `Сколько будет ${num1} + ${num2}?`;
+            
+            return {
+                isValid: (value) => parseInt(value, 10) === correctAnswer
+            };
+        })();
 
-                document.getElementById('captchaLabel').textContent = `Сколько будет ${num1} + ${num2}?`;
-
-                return {
-                    isValid: (value) => parseInt(value, 10) === correctAnswer
-                };
-            })();
-
-            // 4. Обработка отправки формы через почтовый клиент
-            const form = document.getElementById('feedbackForm');
-            const statusDiv = document.getElementById('formStatus');
-
+        // 4. Обработка отправки формы через почтовый клиент
+        const form = document.getElementById('feedbackForm');
+        const statusDiv = document.getElementById('formStatus');
+        
+        if (form) {
             form.addEventListener('submit', (event) => {
                 event.preventDefault();
                 
                 const captchaInput = document.getElementById('captchaInput').value;
-
-                // Проверка капчи
+                
                 if (!captchaLogic.isValid(captchaInput)) {
                     statusDiv.textContent = "✕ Неверный ответ капчи! Попробуйте снова.";
                     statusDiv.className = "form-status error";
                     return;
                 }
-
+                
                 const name = document.getElementById('userName').value;
                 const message = document.getElementById('userMessage').value;
-
-                // Формируем тему и тело письма
+                
                 const subject = encodeURIComponent(`Сообщение с сайта кота Васи от ${name}`);
                 const body = encodeURIComponent(`Привет! На твой сайт пришло новое сообщение.\n\nОтправитель: ${name}\n\nTекст:\n${message}`);
-
+                
                 statusDiv.textContent = "Открываем почту...";
                 statusDiv.className = "form-status success";
-
-                // Перенаправляем на почтовое приложение пользователя
+                
                 window.location.href = `mailto:${MY_EMAIL}?subject=${subject}&body=${body}`;
-
-                // Очищаем поля после отправки
                 form.reset();
             });
-        });
+        }
+    });
     </script>
 </body>
 </html>
